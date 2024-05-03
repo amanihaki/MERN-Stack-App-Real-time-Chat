@@ -12,7 +12,7 @@ function Register() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("")
+    setError("");
     setIsLoading(true);
     const formData = new FormData(e.target);
 
@@ -21,11 +21,20 @@ function Register() {
     const password = formData.get("password");
 
     try {
-      const res = await apiRequest.post("/auth/register", {
-        username,
-        email,
-        password,
-      });
+      const res = await apiRequest.post(
+        "/auth/register",
+        {
+          username,
+          email,
+          password,
+        },
+        {
+          headers: {
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          },
+        }
+      );
 
       navigate("/login");
     } catch (err) {
